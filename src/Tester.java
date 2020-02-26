@@ -17,5 +17,22 @@ public class Tester {
         System.out.println(graph.hasVertex(5));
         System.out.println(graph.bfs());
         System.out.println(graph.dfs());
+        System.out.println(graph.shortestPath(1, 4));
+
+        graph.clearGraph();
+        System.out.println("Graph = " + graph);
+
+        // found example to test with on Geeks for Geeks
+        graph.addEdge(0, 1, true);
+        graph.addEdge(0, 3, true);
+        graph.addEdge(1, 2, true);
+        graph.addEdge(3, 4, true);
+        graph.addEdge(3, 7, true);
+        graph.addEdge(4, 5, true);
+        graph.addEdge(4, 6, true);
+        graph.addEdge(4, 7, true);
+        graph.addEdge(5, 6, true);
+        graph.addEdge(6, 7, true);
+        System.out.println(graph.shortestPath(0, 7));
     }
 }
