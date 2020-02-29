@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Graph<T> {
@@ -19,8 +18,9 @@ public class Graph<T> {
      * @param source Vertex
      * @param destination Vertex
      * @param undirected true if edge should form in both directions
+     * @param dupEdge true if duplicate edges before source and destination can exist
      */
-    public void addEdge(T source, T destination, boolean undirected) {
+    public void addEdge(T source, T destination, boolean undirected, boolean dupEdge) {
         if (!map.containsKey(source)) {
             // source vertex did not exist so create that vertex
             addVertex(source);
@@ -29,6 +29,11 @@ public class Graph<T> {
         if (!map.containsKey(destination)) {
             // destination vertex did not exist so create that vertex
             addVertex(destination);
+        }
+
+        if (!dupEdge && hasEdge(source, destination)) {
+            // duplicate edges is not allowed and edge already exist
+            return;
         }
 
         // add connections
@@ -323,4 +328,53 @@ public class Graph<T> {
 
         return  stringProgress.toString();
     }
+
+    /**
+     * Takes a 2D ArrayList and converts it into a graph.
+     * Surrounding elements are connected to the middle node in the created graph.
+     * If a maze, a wall has no connections.
+     * @param matrix
+     * @param wall what classifies as a wall
+     * @param isMaze true if is a maze
+     */
+    public void matrixToGraph(ArrayList<ArrayList<T>> matrix, T wall, boolean isMaze) {
+        // loop through row by row
+        for (int row = 0; row < matrix.size(); row++) {
+            // loop through each column in row
+            for (int column = 0; column < matrix.get(row).size(); column++) {
+                if (!isMaze || !matrix.get(row).get(column).equals(wall)) {
+                    // this is not a wall and / or this is not a maze
+                    addNeighbors(row, column, matrix, wall, isMaze);
+                }
+            }
+        }
+    }
+
+    /**
+     * Add the neighbors of the current element in the matrix to the graph.
+     * If a maze, a wall has no connections.
+     * @param row
+     * @param column
+     * @param matrix
+     * @param wall what classifies as a wall
+     * @param isMaze true if is a maze
+     */
+    private void addNeighbors(int row, int column, ArrayList<ArrayList<T>> matrix, T wall, boolean isMaze) {
+        // check each side of item
+        for (int r = -1; r < 2; r++) {
+            // check above and below for each item (and the diagonals)
+            for (int col = -1; col < 2; col++) {
+                // attempt to get element - if not middle element or
+                if (r != 0 || col != 0) {
+                    try {
+                        addEdge(matrix.get(row).get(column), matrix.get(row + r).get(column + col),
+                                false, false);
+                    } catch (IndexOutOfBoundsException ex) {
+                        // went out of bounds. This is tolerable behavior in this case
+                    }
+                }
+            }
+        }
+    }
+
 }
