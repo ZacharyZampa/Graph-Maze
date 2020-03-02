@@ -45,6 +45,35 @@ public class Graph<T> {
     }
 
     /**
+     * Remove vertex from graph
+     * @param vertex
+     * @return true if removed
+     */
+    public boolean removeVertex(T vertex) {
+        if (!map.containsKey(vertex)) {
+            // graph does not have given vertex
+            return false;
+        }
+        map.remove(vertex);
+        return true;
+    }
+
+    /**
+     * Remove edges from given Vertex
+     * @param vertex
+     * @return true if removed
+     */
+    public boolean removeVertexEdges(T vertex) {
+        if (!map.containsKey(vertex)) {
+            // graph does not have given vertex
+            return false;
+        }
+        removeVertex(vertex);
+        addVertex(vertex);
+        return true;
+    }
+
+    /**
      * Clear the graph
      */
     public void clearGraph() {

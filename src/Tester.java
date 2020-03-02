@@ -40,6 +40,7 @@ public class Tester {
         graph.clearGraph();
 
         // create a simple Integer matrix to add to Graph
+        System.out.println("simple matrix");
         ArrayList<ArrayList<Integer>> matrix = new ArrayList<>();
         int elt = 0;
         for (int row = 0; row < 5; row++) {
@@ -84,5 +85,8 @@ public class Tester {
         graph.matrixToGraph(maze, 5, true);
         System.out.println(graph.toString());
         System.out.println(graph.shortestPath(0, 3));
+
+        graph.removeVertexEdges(19);
+        System.out.println(graph);
     }
 }
