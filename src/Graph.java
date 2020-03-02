@@ -55,6 +55,13 @@ public class Graph<T> {
             return false;
         }
         map.remove(vertex);
+
+        // remove connections of vertex from other nodes
+        // loop through vertices of the graph (keys of the map)
+        for (T node : map.keySet()) {
+            map.get(node).remove(vertex);
+        }
+
         return true;
     }
 

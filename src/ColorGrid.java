@@ -86,7 +86,7 @@ public class ColorGrid extends JPanel {
                         if (type == 0) {
                             // change to wall
                             System.out.println("convert to wall");
-                            MazeMaker.graph.removeVertexEdges(counter);
+                            MazeMaker.graph.removeVertex(counter);
                             System.out.println(MazeMaker.graph);
                         } else if (type == 1) {
                             // set source
